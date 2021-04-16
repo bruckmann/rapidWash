@@ -1,4 +1,3 @@
-
 const verifyEmptyFields = require('../validators/verifyEmptyFields.js');
 const validateTelephone = require('../validators/validateTelephone');
 const verifyData = require('../validators/verifyData');
@@ -12,6 +11,8 @@ class ScheduleController {
         const fields = [name, brand, model,
         licensePlate, date , time];
 
+        fields = fields.trim().escape(fields);
+
         const emptyFields = verifyEmptyFields(fields);
 
         if(emptyFields.length > 0){
@@ -24,7 +25,7 @@ class ScheduleController {
             return res.status(401).json({Response: 'O campo telefone não está preenchido corretamente'});
         }
 
-        const verifyData = verifyData(date,time);
+        const validateData = verifyData(date,time);
         
         if(verifyData == false){
             return res.status(401).json({Response: 'Somente agendamos de segunda a sexta das 8:00 as 18:00'});
@@ -37,16 +38,3 @@ class ScheduleController {
 
 
 module.exports = ScheduleController;
-
-
-/*[
-    check('name', 'Nome é campo obrigatório.')
-     .trim().escape().notEmpty(),
-    check('telephone', 'Telefone deve possuir numeros maior ou igual a 0')
-    .trim.escape().optional().isInt({ min: 0, max: 11}),
-    check('whatsapp', 'Whatsapp não é obrigatorio')
-    .trim.escape(),
-    check('brand', 'Marca não é obrigatorio')
-     ]
-
-     */
