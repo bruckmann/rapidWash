@@ -1,13 +1,14 @@
 import React from 'react';
+import { FormLabel, Input, FormErrorMessage, FormControl } from '@chakra-ui/react';
 import './styles.css'
 
-const InputGroup = ({name, label, type, onChange}) => {
+const InputGroup = ({name, label, type, onChange, isRequired }) => {
    
   return(
-    <div className="input-group">
-      <label htmlFor={name}>{label}</label>
-      <input type={type} name={name} onChange={(e) => onChange(e.target.value)}/>
-    </div>
+    <FormControl className="input-group" isRequired={isRequired ? true : false}>
+      <FormLabel htmlFor={name}>{label}</FormLabel>
+      <Input type={type} name={name} />
+    </FormControl>
   );
 };
 
