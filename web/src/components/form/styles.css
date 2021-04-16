@@ -1,0 +1,15 @@
+.header {
+  width: 100%;
+}
+
+.header p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+form {
+  padding: 10px 20px;
+}
