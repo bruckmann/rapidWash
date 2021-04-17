@@ -12,6 +12,7 @@ import telephoneValidate from '../../utils/telephoneValidade';
 import apiService from '../../services/apiService';
 
 import './styles.css';
+import timeValidate from '../../utils/timeValidate';
 
 const FormComponent = () => {
   const [name, setName] = useState('');
@@ -39,6 +40,11 @@ const FormComponent = () => {
       }
       if(!isWeekDay){
         return setDateError('Os agendamentos só podem ser feitos em dias de semana');
+      }
+
+      const isTimeValid = timeValidate(time);
+      if(!isTimeValid){
+        return setTimeError('Os agendamentos só podem ser feitos no intervalo de 30 minutos');
       }
 
     } catch (error) {
