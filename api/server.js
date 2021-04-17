@@ -1,5 +1,5 @@
-const api = require('./api');
+const app = require('./app');
 
-app.listen(port, () => {
-    console.log(`rodando na porta: ${port}`);
+app.listen(3030, () => {
+    console.log('server rodando');
 })
