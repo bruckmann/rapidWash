@@ -6,6 +6,9 @@ import InputGroup from '../inputGroup';
 import DatePickerComponent from '../datePicker';
 import RadioButton from '../radioButton';
 
+import dateValidate from '../../utils/dateValidate';
+import telephoneValidate from '../../utils/telephoneValidade';
+
 import apiService from '../../services/apiService';
 
 import './styles.css';
@@ -24,9 +27,23 @@ const FormComponent = () => {
   const [ dateError, setDateError ] = useState('');
   const [ timeError, setTimeError ] = useState('');
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
-    
+    try {
+      const isWeekDay = dateValidate(date);
+      if(telephone !== ''){
+        const isTelephoneValid = telephoneValidate(telephone);
+        if(!isTelephoneValid){
+          return setTelephoneError('Formato inválido, o número precisa conter 11 números com o DDD');
+        }
+      }
+      if(!isWeekDay){
+        return setDateError('Os agendamentos só podem ser feitos em dias de semana');
+      }
+
+    } catch (error) {
+      
+    }
   };
 
   return (
