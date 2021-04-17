@@ -1,6 +1,7 @@
 const verifyEmptyFields = require('../utils/verifyEmptyFields.js');
 const validateTelephone = require('../utils/validateTelephone');
 const verifyData = require('../utils/verifyData');
+const preProcessing = require('../utils/ preProcessing');
 
 class ScheduleController {
      schedule(req, res) {
@@ -11,12 +12,12 @@ class ScheduleController {
         const fields = [name, brand, model,
         licensePlate, date , time];
 
-        //const field = fields.trim();
-
-        const emptyField = verifyEmptyFields(fields);
+        const preProcess = preProcessing(fields);
+        const emptyField = verifyEmptyFields(preProcess);
         const verifyTelephone = validateTelephone(telephone,whatsapp);
         const validateData = verifyData(date,time);
-
+       
+        
         if(emptyField.length > 0){
             return res.status(401).json({Response: 'Campos vázios'});
         }
@@ -37,3 +38,6 @@ class ScheduleController {
 
 
 module.exports = ScheduleController;
+
+
+

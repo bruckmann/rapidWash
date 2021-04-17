@@ -1,5 +1,5 @@
 
-    function verifyEmptyFields(fields){
+  function verifyEmptyFields(fields){
     const emptyFields = [];
     for(let field of fields){
     if(field === '' || field === undefined){
