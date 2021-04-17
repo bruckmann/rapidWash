@@ -6,6 +6,8 @@ import InputGroup from '../inputGroup';
 import DatePickerComponent from '../datePicker';
 import RadioButton from '../radioButton';
 
+import apiService from '../../services/apiService';
+
 import './styles.css';
 
 const FormComponent = () => {
@@ -24,16 +26,7 @@ const FormComponent = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      name,
-      brand,
-      model,
-      licenseField,
-      telephone,
-      whatsapp,
-      date,
-      time
-    );
+    
   };
 
   return (
