@@ -1,12 +1,12 @@
 
     function validateTelephone(telephone, whatsapp) {
 
-        if(telephone !== '' && telephone !== undefined){
-            if(telephone.length == 9){
-                    if(whatsapp == true || whatsapp == false ){
-                        return true;
-                    }
+        const teste = isNaN(telephone);
 
+        if(telephone !== '' && telephone !== undefined && teste == false){
+            console.log(telephone);
+            if(telephone.length == 9 && whatsapp == true || whatsapp == false){   
+                        return true;         
             } else{
                 return false;
             }

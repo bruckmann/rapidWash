@@ -11,24 +11,20 @@ class ScheduleController {
         const fields = [name, brand, model,
         licensePlate, date , time];
 
-        name.trim();
-        console.log(name);
         //const field = fields.trim();
 
         const emptyField = verifyEmptyFields(fields);
+        const verifyTelephone = validateTelephone(telephone,whatsapp);
+        const validateData = verifyData(date,time);
 
         if(emptyField.length > 0){
             return res.status(401).json({Response: 'Campos vázios'});
         }
 
-        const verifyTelephone = validateTelephone(telephone,whatsapp);
-        
         if(verifyTelephone == false){
             return res.status(401).json({Response: 'O campo telefone não está preenchido corretamente'});
         }
-
-        const validateData = verifyData(date,time);
-        
+ 
         if(validateData == false){
             return res.status(400).json({Response: 'Somente agendamos de segunda a sexta das 8:00 as 18:00'});
         }
