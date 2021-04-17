@@ -17,7 +17,7 @@ const myTheme = {
 
 const App = () => {
  return(
-  <ChakraProvider theme={myTheme} resetCSS>
+  <ChakraProvider theme={myTheme}>
     <Routes />
   </ChakraProvider>
  )

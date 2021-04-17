@@ -1,5 +1,6 @@
 .header {
   width: 100%;
+  margin-top: 10px;
 }
 
 .header p {
@@ -11,5 +12,10 @@
 }
 
 form {
-  padding: 10px 20px;
+  padding: 10px 30px;
+}
+
+form .button {
+  display: flex;
+  margin: auto;
 }
