@@ -6,7 +6,7 @@ const myTheme = {
   styles: {
     global: {
       body: {
-        background: "url(https://images.wallpaperscraft.com/image/ferrari_rear_view_red_121860_3840x2400.jpg) no-repeat center center",
+        backgroundColor: "#e3e1e1",
         margin: "0",
         boxSizing: "border-box",
         fontFamily: 'Roboto',
