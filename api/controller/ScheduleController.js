@@ -1,6 +1,6 @@
-const verifyEmptyFields = require('../validators/verifyEmptyFields.js');
-const validateTelephone = require('../validators/validateTelephone');
-const verifyData = require('../validators/verifyData');
+const verifyEmptyFields = require('../utils/verifyEmptyFields.js');
+const validateTelephone = require('../utils/validateTelephone');
+const verifyData = require('../utils/verifyData');
 
 class ScheduleController {
      schedule(req, res) {
@@ -11,11 +11,13 @@ class ScheduleController {
         const fields = [name, brand, model,
         licensePlate, date , time];
 
-        fields = fields.trim().escape(fields);
+        name.trim();
+        console.log(name);
+        //const field = fields.trim();
 
-        const emptyFields = verifyEmptyFields(fields);
+        const emptyField = verifyEmptyFields(fields);
 
-        if(emptyFields.length > 0){
+        if(emptyField.length > 0){
             return res.status(401).json({Response: 'Campos vázios'});
         }
 
@@ -27,10 +29,11 @@ class ScheduleController {
 
         const validateData = verifyData(date,time);
         
-        if(verifyData == false){
-            return res.status(401).json({Response: 'Somente agendamos de segunda a sexta das 8:00 as 18:00'});
+        if(validateData == false){
+            return res.status(400).json({Response: 'Somente agendamos de segunda a sexta das 8:00 as 18:00'});
         }
 
+        return res.status(200).json({Response: 'Formulario enviado com sucesso'});
     }
 
         
