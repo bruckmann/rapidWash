@@ -1,12 +1,11 @@
-
-  function verifyEmptyFields(fields){
-    const emptyFields = [];
-    for(let field of fields){
-    if(field === '' || field === undefined){
-    emptyFields.push(field);
-      }
+function verifyEmptyFields(fields) {
+  const emptyFields = [];
+  for (let field of fields) {
+    if (field.value === '' || field.value === undefined) {
+      emptyFields.push(field);
     }
-    return emptyFields;
   }
+  return emptyFields;
+}
 
 module.exports = verifyEmptyFields;
