@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import './styles.css';
 
-const DatePickerComponent = ({ onChange }) => {
+const DatePickerComponent = ({ onChange, ...rest}) => {
   const date = moment().format('yyyy-MM-DD');
   return (
     <FormControl className="input-group" isRequired>
@@ -12,6 +12,7 @@ const DatePickerComponent = ({ onChange }) => {
       <Input
         type="date"
         min={date}
+        {...rest}
         onChange={(e) => {
           onChange(e);
         }}

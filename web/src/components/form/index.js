@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 import { FcAlarmClock } from 'react-icons/fc';
 import Container from '../container/';
 import InputGroup from '../inputGroup';
@@ -15,6 +15,8 @@ import './styles.css';
 import timeValidate from '../../utils/timeValidate';
 
 const FormComponent = () => {
+  const toast = useToast();
+
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
@@ -24,31 +26,59 @@ const FormComponent = () => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
 
-  const [ telephoneError, setTelephoneError ] = useState('');
-  const [ dateError, setDateError ] = useState('');
-  const [ timeError, setTimeError ] = useState('');
+  const [telephoneError, setTelephoneError] = useState(false);
+  const [dateError, setDateError] = useState(false);
+  const [timeError, setTimeError] = useState(false);
 
-  const onSubmit = async(e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     try {
       const isWeekDay = dateValidate(date);
-      if(telephone !== ''){
-        const isTelephoneValid = telephoneValidate(telephone);
-        if(!isTelephoneValid){
-          return setTelephoneError('Formato inválido, o número precisa conter 11 números com o DDD');
+      const isTimeValid = timeValidate(time);
+      const isTelephoneValid = telephoneValidate(telephone);
+
+      if (telephone !== '') {
+        if (!isTelephoneValid) {
+          return (
+            toast({
+              title: 'Erro na requisição',
+              description: 'O campo de telefone precisa ter 11 caracteres.',
+              status: 'error',
+              duration: 9000,
+              isClosable: true,
+            }),
+            setTelephoneError(true)
+          );
         }
       }
-      if(!isWeekDay){
-        return setDateError('Os agendamentos só podem ser feitos em dias de semana');
+
+      if (isWeekDay) {
+        return (
+          setDateError(true),
+          toast({
+            title: 'Erro na requisição',
+            description: 'Só agendamos de segunda à sexta feira.',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        );
       }
 
-      const isTimeValid = timeValidate(time);
-      if(!isTimeValid){
-        return setTimeError('Os agendamentos só podem ser feitos no intervalo de 30 minutos');
+      if (isTimeValid) {
+        return (
+          setTimeError(true),
+          toast({
+            title: 'Erro na requisição',
+            description: 'Só atendemos das 08:00 às 18:00 de 30 em 30min.',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        );
       }
-
     } catch (error) {
-      
+      console.log(error);
     }
   };
 
@@ -94,16 +124,35 @@ const FormComponent = () => {
           name="telephone"
           label="Telefone para contato"
           type="number"
-          onChange={(e) => setTelephone(e.target.value)}
+          onChange={(e) => {
+            setTelephone(e.target.value);
+            setTelephoneError(false);
+          }}
+          isInvalid={telephoneError}
         />
-        <RadioButton onChange={(value) => setWhatsapp(value)} />
-        <DatePickerComponent onChange={(e) => setDate(e.target.value)} />
+        <RadioButton
+          onChange={(value) => {
+            setWhatsapp(value);
+            setTelephoneError(false);
+          }}
+        />
+        <DatePickerComponent
+          onChange={(e) => {
+            setDate(e.target.value);
+            setDateError(false);
+          }}
+          isInvalid={dateError}
+        />
         <InputGroup
           name="time"
           label="Horário do agendamento"
           type="time"
           isRequired
-          onChange={(e) => setTime(e.target.value)}
+          isInvalid={timeError}
+          onChange={(e) => {
+            setTime(e.target.value);
+            setTimeError(false);
+          }}
         />
         <Button colorScheme="blue" className="button" type="submit">
           Agendar!

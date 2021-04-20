@@ -1,17 +1,15 @@
 function timeValidate(time) {
+  const schedule = time.split(':');
+  const hour = +schedule[0];
+  const minutes = +schedule[1];
 
-    time = time.split(':')
-    const hours = time[0]
-    const minutes = time[1]
-    
-    if(hours >= 8 && hours <= 18){
-        if(minutes === "30" || minutes === "00"){
-            return true;
-        } else {
-        return 'Você só pode agendar horarios a cada 30 minutos';
-        }
-    }
-  
+  if (hour < 8 || hour > 18) {
+    return false;
+  } else if (minutes !== 30 && minutes !== 0) {
+    return false;
+  }
+
+  return true;
 }
-  export default timeValidate;
-  
+
+module.exports = timeValidate;
