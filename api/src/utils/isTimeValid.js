@@ -3,8 +3,6 @@ function isTimeValidate(time) {
   const hour = +schedule[0];
   const minutes = +schedule[1];
 
-  console.log(minutes !== 0);
-
   if (hour < 8 || hour > 18) {
     return false;
   } else if (minutes !== 30 && minutes !== 0) {

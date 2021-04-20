@@ -1,4 +1,3 @@
-const verifyEmptyFields = require('../utils/verifyEmptyFields.js');
 const validateTelephone = require('../utils/validateTelephone');
 const isWeekday = require('../utils/isWeekday');
 const isTimeValid = require('../utils/isTimeValid');
