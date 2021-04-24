@@ -1,5 +1,5 @@
 const app = require('./app');
 
-app.listen( 8080 , () => {
+app.listen( 3030, () => {
     console.log('Server listen to 3030 🚀');
 })
