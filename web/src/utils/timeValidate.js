@@ -12,4 +12,4 @@ function timeValidate(time) {
   return true;
 }
 
-module.exports = timeValidate;
+export default timeValidate;

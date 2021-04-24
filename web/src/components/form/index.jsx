@@ -6,15 +6,18 @@ import Container from '../container/';
 import InputGroup from '../inputGroup';
 import DatePickerComponent from '../datePicker';
 import RadioButton from '../radioButton';
+
 import dateValidate from '../../utils/dateValidate';
 import telephoneValidate from '../../utils/telephoneValidade';
 import timeValidate from '../../utils/timeValidate';
+import isPlateValid from '../../utils/isPlateValid';
+import isCarYearValid from '../../utils/isCarYearValid';
+
 import apiService from '../../services/apiService';
 
 import './styles.css';
 
 const FormComponent = () => {
-  const toast = useToast();
 
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
@@ -29,6 +32,10 @@ const FormComponent = () => {
   const [telephoneError, setTelephoneError] = useState(false);
   const [dateError, setDateError] = useState(false);
   const [timeError, setTimeError] = useState(false);
+  const [carYearError, setCarYearError] = useState(false);
+  const [plateError, setPlateError] = useState(false);
+
+  const toast = useToast();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +63,7 @@ const FormComponent = () => {
         return (
           setDateError(true),
           toast({
-            title: 'Erro na requisição',
+            title: 'Erro no agendamento',
             description: 'Só agendamos de segunda à sexta feira.',
             status: 'error',
             duration: 9000,
@@ -69,8 +76,34 @@ const FormComponent = () => {
         return (
           setTimeError(true),
           toast({
-            title: 'Erro na requisição',
+            title: 'Erro no agendamento',
             description: 'Só atendemos das 08:00 às 18:00 de 30 em 30min.',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        );
+      }
+
+      if (!isCarYearValid(carYear)) {
+        return (
+          setCarYearError(true),
+          toast({
+            title: 'Erro no agendamento',
+            description: 'O ano do carro não pode ser maior que o ano atual.',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        );
+      }
+
+      if (!isPlateValid(licensePlate)) {
+        return (
+          setPlateError(true),
+          toast({
+            title: 'Erro no agendamento',
+            description: 'A placa não está no padrão ABC1234.',
             status: 'error',
             duration: 9000,
             isClosable: true,
@@ -83,6 +116,7 @@ const FormComponent = () => {
         brand,
         model,
         licensePlate,
+        carYear,
         telephone,
         whatsapp,
         date,
@@ -140,13 +174,21 @@ const FormComponent = () => {
           label="Ano do veículo"
           type="number"
           isRequired
-          onChange={(e) => setCarYear(e.target.value)}
+          isInvalid={carYearError}
+          onChange={(e) => {
+            setCarYear(e.target.value);
+            setCarYearError(false);
+          }}
         />
         <InputGroup
           name="licensePlate"
           label="Placa do veículo"
           type="text"
-          onChange={(e) => setLicensePlate(e.target.value)}
+          isInvalid={plateError}
+          onChange={(e) => {
+            setLicensePlate(e.target.value);
+            setPlateError(false);
+          }}
         />
         <InputGroup
           name="telephone"
