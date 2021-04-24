@@ -20,7 +20,7 @@ class ScheduleController {
     const verifyTelephone = validateTelephone(telephone, whatsapp);
 
     if (verifyTelephone == false) {
-      return res.status(401).json({
+      return res.status(422).json({
         Response: 'O campo telefone não está preenchido corretamente.',
       });
     }

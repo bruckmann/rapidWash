@@ -1,5 +1,6 @@
 const verifyEmptyFields = require('../utils/verifyEmptyFields');
 
+
 function fieldsMiddleware(req, res, next) {
   const fields = [
     { fieldName: 'Nome', value: req.body.name },
@@ -18,7 +19,11 @@ function fieldsMiddleware(req, res, next) {
       .json({ Response: `os campos ${emptyFields} não podem ser vázios` });
   }
 
-  return next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+  next();
+
 }
 
 module.exports = fieldsMiddleware;

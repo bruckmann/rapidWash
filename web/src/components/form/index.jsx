@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { Button, useToast } from '@chakra-ui/react';
 import { FcAlarmClock } from 'react-icons/fc';
+
 import Container from '../container/';
 import InputGroup from '../inputGroup';
 import DatePickerComponent from '../datePicker';
 import RadioButton from '../radioButton';
-
 import dateValidate from '../../utils/dateValidate';
 import telephoneValidate from '../../utils/telephoneValidade';
-
+import timeValidate from '../../utils/timeValidate';
 import apiService from '../../services/apiService';
 
 import './styles.css';
-import timeValidate from '../../utils/timeValidate';
 
 const FormComponent = () => {
   const toast = useToast();
@@ -20,9 +19,10 @@ const FormComponent = () => {
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
-  const [licenseField, setLicenseField] = useState('');
+  const [carYear, setCarYear] = useState('');
+  const [licensePlate, setLicensePlate] = useState('');
   const [telephone, setTelephone] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
+  const [whatsapp, setWhatsapp] = useState('nao');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
 
@@ -65,7 +65,7 @@ const FormComponent = () => {
         );
       }
 
-      if (isTimeValid) {
+      if (!isTimeValid) {
         return (
           setTimeError(true),
           toast({
@@ -77,8 +77,30 @@ const FormComponent = () => {
           })
         );
       }
+
+      const response = await apiService.post('/schedule', {
+        name,
+        brand,
+        model,
+        licensePlate,
+        telephone,
+        whatsapp,
+        date,
+        time
+      });
+
+
+      if (response.status === 200) {
+        toast({
+          title: 'Agendamento feito com sucesso',
+          description: `Seu agendamento foi feito para a data ${date} no horário ${time}`,
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
     }
   };
 
@@ -112,13 +134,19 @@ const FormComponent = () => {
           isRequired
           onChange={(e) => setModel(e.target.value)}
         />
+
         <InputGroup
-          n
+          name="carYear"
+          label="Ano do veículo"
+          type="number"
+          isRequired
+          onChange={(e) => setCarYear(e.target.value)}
+        />
+        <InputGroup
           name="licensePlate"
           label="Placa do veículo"
-          typ
-          e="text"
-          onChange={(e) => setLicenseField(e.target.value)}
+          type="text"
+          onChange={(e) => setLicensePlate(e.target.value)}
         />
         <InputGroup
           name="telephone"
@@ -131,6 +159,7 @@ const FormComponent = () => {
           isInvalid={telephoneError}
         />
         <RadioButton
+          disabled={telephone === '' ? (true) : (false)}
           onChange={(value) => {
             setWhatsapp(value);
             setTelephoneError(false);
