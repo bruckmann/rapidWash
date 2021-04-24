@@ -1,14 +1,6 @@
 function validateTelephone(telephone, whatsapp) {
-  const pattern = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
 
-  if (pattern.test(telephone)) {
-    if ((telephone.length == 11 && whatsapp == true) || whatsapp == false) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
+    return telephone.length == 11 && whatsapp == "sim" || whatsapp == "nao" 
+  
 }
 module.exports = validateTelephone;

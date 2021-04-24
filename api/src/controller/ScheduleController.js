@@ -21,7 +21,7 @@ class ScheduleController {
 
 
     if (!validateTelephone(telephone, whatsapp)) {
-      return res.status(401).json({
+      return res.status(400).json({
         Response: 'O campo telefone não está preenchido corretamente.',
       });
     }
@@ -60,7 +60,7 @@ class ScheduleController {
     }
 
     return res
-      .status(200)
+      .status(201)
       .json({ Response: 'Formulario enviado com sucesso.' });
   }
 }
