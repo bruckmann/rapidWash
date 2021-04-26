@@ -134,6 +134,7 @@ const FormComponent = () => {
         })
       }
     } catch (error) {
+      console.log(error);
       toast({
         title: 'Erro no agendamento',
         description: error.response.data,
