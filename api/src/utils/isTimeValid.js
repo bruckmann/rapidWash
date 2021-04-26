@@ -7,6 +7,8 @@ function isTimeValidate(time) {
     return false;
   } else if (minutes !== 30 && minutes !== 0) {
     return false;
+  } else if (hour == 18 && minutes == 30){
+    return false;
   }
 
   return true;
