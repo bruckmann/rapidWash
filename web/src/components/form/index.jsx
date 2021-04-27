@@ -41,8 +41,6 @@ const FormComponent = () => {
     e.preventDefault();
     try {
 
-      console.log(date);
-      console.log(isWeekDay(date))
 
       if (!isCarYearValid(carYear)) {
         return (
@@ -75,7 +73,7 @@ const FormComponent = () => {
         if (!isTelephoneValid(telephone)) {
           return (
             toast({
-              title: 'Erro na requisição',
+              title: 'Erro no agendamento',
               description: 'O campo de telefone precisa ter 11 caracteres.',
               status: 'error',
               duration: 9000,
@@ -127,10 +125,10 @@ const FormComponent = () => {
         time
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         toast({
           title: 'Agendamento feito com sucesso',
-          description: `Seu agendamento foi feito para a data ${date} no horário ${time}`,
+          description: `Seu agendamento foi feito para a data ${date} às ${time} horas`,
           status: 'success',
           duration: 9000,
           isClosable: true,
