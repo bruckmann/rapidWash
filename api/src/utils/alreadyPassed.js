@@ -1,12 +1,16 @@
-function alreadyPassed(date){
+const moment = require('moment-timezone');
 
-    const dateForm = new Date(date);
-    const currentDate = new Date();
+function alreadyPassed(date,time){
 
-    return currentDate.valueOf() < dateForm.valueOf()
+    const dateString = `${date}T${time}`;
+    const currentDate = Date.now();
 
+    const currentDateFormatted = moment.tz(currentDate, "America/Sao_Paulo");
+    const dateformatted= moment.tz(dateString, "America/Sao_Paulo");
+   
+  
+    return currentDateFormatted < dateformatted;    
 }
-
 
 module.exports = alreadyPassed;
 

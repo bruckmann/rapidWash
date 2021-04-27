@@ -22,7 +22,7 @@ class ScheduleController {
 
     if (!validateTelephone(telephone, whatsapp)) {
       return res.status(400).json({
-        Response: 'O campo telefone não está preenchido corretamente.',
+        Response: 'O campo telefone não esta preenchido corretamento e/ou whatsapp não esta preenchido.',
       });
     }
 
@@ -39,29 +39,29 @@ class ScheduleController {
       });
     }
 
-    if (!alreadyPassed(date)) {
+    if (!alreadyPassed(date,time)) {
       return res.status(400).json({
         Response:
-          'Você não pode agendar uma data no passado',
+          'Você não pode agendar uma data/horario no passado',
       });
     }
     if (!isPlateValid(licensePlate)) {
       return res.status(400).json({
         Response:
-          'Você precisa mandar o formato de placa correto',
+          'Você precisa informar o formato de placa correto',
       });
     }
 
      if (!validateCarYear(carYear)) {
       return res.status(400).json({
         Response:
-          'Você não pode cadastrar um carro do futuro',
+          'Você não pode agendar um carro produzido no futuro',
       });
     }
 
     return res
       .status(201)
-      .json({ Response: 'Formulario enviado com sucesso.' });
+      .json({ Response: 'Agendamento feito com sucesso.' });
   }
 }
 
