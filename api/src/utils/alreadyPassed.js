@@ -1,11 +1,15 @@
+const moment = require('moment-timezone');
+
 function alreadyPassed(date,time){
 
-    const dateString = `${date}T${time}:00.000Z`;
-    const dateForm = Date.parse(dateString);
+    const dateString = `${date}T${time}`;
     const currentDate = Date.now();
 
-    return currentDate < dateForm;
-    
+    const currentDateFormatted = moment.tz(currentDate, "America/Sao_Paulo");
+    const dateformatted= moment.tz(dateString, "America/Sao_Paulo");
+   
+  
+    return currentDateFormatted < dateformatted;    
 }
 
 module.exports = alreadyPassed;
