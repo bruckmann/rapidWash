@@ -10,10 +10,10 @@ O projeto consiste em uma página para o agendamento de uma lavagem de carros, o
 
 ## Tecnologias utilizadas 💻
 
-- ReactJS
-- ChakraUI
-- NodeJS
-- Express
+- [ReactJS](https://pt-br.reactjs.org)
+- [ChakraUI](https://chakra-ui.com)
+- [NodeJS](https://nodejs.org/en/)
+- [Express](https://expressjs.com/pt-br/)
 
 ------
 
