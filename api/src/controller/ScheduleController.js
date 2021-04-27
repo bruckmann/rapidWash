@@ -39,7 +39,7 @@ class ScheduleController {
       });
     }
 
-    if (!alreadyPassed(date)) {
+    if (!alreadyPassed(date,time)) {
       return res.status(400).json({
         Response:
           'Você não pode agendar uma data no passado',

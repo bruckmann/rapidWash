@@ -1,12 +1,12 @@
-function alreadyPassed(date){
+function alreadyPassed(date,time){
 
-    const dateForm = new Date(date);
-    const currentDate = new Date();
+    const dateString = `${date}T${time}:00.000Z`;
+    const dateForm = Date.parse(dateString);
+    const currentDate = Date.now();
 
-    return currentDate.valueOf() < dateForm.valueOf()
-
+    return currentDate < dateForm;
+    
 }
-
 
 module.exports = alreadyPassed;
 
