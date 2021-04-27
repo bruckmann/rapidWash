@@ -1,4 +1,4 @@
-function timeValidate(time) {
+function isTimeValid(time) {
   const schedule = time.split(':');
   const hour = +schedule[0];
   const minutes = +schedule[1];
@@ -12,4 +12,4 @@ function timeValidate(time) {
   return true;
 }
 
-export default timeValidate;
+export default isTimeValid;

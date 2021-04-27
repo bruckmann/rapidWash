@@ -7,9 +7,9 @@ import InputGroup from '../inputGroup';
 import DatePickerComponent from '../datePicker';
 import RadioButton from '../radioButton';
 
-import dateValidate from '../../utils/dateValidate';
-import telephoneValidate from '../../utils/telephoneValidade';
-import timeValidate from '../../utils/timeValidate';
+import isWeekDay from '../../utils/isWeekDay';
+import isTelephoneValid from '../../utils/isTelephoneValid';
+import isTimeValid from '../../utils/isTimeValid';
 import isPlateValid from '../../utils/isPlateValid';
 import isCarYearValid from '../../utils/isCarYearValid';
 
@@ -40,50 +40,9 @@ const FormComponent = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const isWeekDay = dateValidate(date);
-      const isTimeValid = timeValidate(time);
-      const isTelephoneValid = telephoneValidate(telephone);
 
-      if (telephone !== '') {
-        if (!isTelephoneValid) {
-          return (
-            toast({
-              title: 'Erro na requisição',
-              description: 'O campo de telefone precisa ter 11 caracteres.',
-              status: 'error',
-              duration: 9000,
-              isClosable: true,
-            }),
-            setTelephoneError(true)
-          );
-        }
-      }
-
-      if (isWeekDay) {
-        return (
-          setDateError(true),
-          toast({
-            title: 'Erro no agendamento',
-            description: 'Só agendamos de segunda à sexta feira.',
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-          })
-        );
-      }
-
-      if (!isTimeValid) {
-        return (
-          setTimeError(true),
-          toast({
-            title: 'Erro no agendamento',
-            description: 'Só atendemos das 08:00 às 18:00 de 30 em 30min.',
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-          })
-        );
-      }
+      console.log(date);
+      console.log(isWeekDay(date))
 
       if (!isCarYearValid(carYear)) {
         return (
@@ -111,6 +70,51 @@ const FormComponent = () => {
         );
       }
 
+
+      if (telephone !== '') {
+        if (!isTelephoneValid(telephone)) {
+          return (
+            toast({
+              title: 'Erro na requisição',
+              description: 'O campo de telefone precisa ter 11 caracteres.',
+              status: 'error',
+              duration: 9000,
+              isClosable: true,
+            }),
+            setTelephoneError(true)
+          );
+        }
+      }
+
+      if (isWeekDay(date)) {
+        return (
+          setDateError(true),
+          toast({
+            title: 'Erro no agendamento',
+            description: 'Só agendamos de segunda à sexta feira.',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        );
+      }
+
+      if (!isTimeValid(time)) {
+        return (
+          setTimeError(true),
+          toast({
+            title: 'Erro no agendamento',
+            description: 'Só atendemos das 08:00 às 18:00 de 30 em 30min.',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        );
+      }
+
+
+
+
       const response = await apiService.post('/schedule', {
         name,
         brand,
@@ -123,7 +127,6 @@ const FormComponent = () => {
         time
       });
 
-
       if (response.status === 200) {
         toast({
           title: 'Agendamento feito com sucesso',
@@ -134,10 +137,10 @@ const FormComponent = () => {
         })
       }
     } catch (error) {
-      console.log(error);
+      const errorMessage = error.response.data.Response
       toast({
         title: 'Erro no agendamento',
-        description: error.response.data,
+        description: errorMessage,
         status: 'error',
         duration: 9000,
         isClosable: true,

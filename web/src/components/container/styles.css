@@ -12,10 +12,33 @@
   background: url(https://www.ubackground.com/_ph/84/95143575.jpg) no-repeat center center;
   width: 100%;
   height: 100%;
+  animation: opacity 1500ms ease-in;
 }
 
 .content {
   background-color: white;
   width: 100%;
   height: 100%;
+  animation: up 200ms ease-in;
+}
+
+@keyframes up {
+  from {
+      opacity: 0;
+      transform: translateY(25px)
+  }
+  
+  to {
+      opacity: 1;
+  }
+}
+
+@keyframes opacity {
+  from {
+      opacity: 0;
+  }
+
+  to {
+      opacity: 1;
+  }
 }
